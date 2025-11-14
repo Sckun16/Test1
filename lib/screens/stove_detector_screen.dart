@@ -25,7 +25,7 @@ class _StoveDetectorScreenState extends State<StoveDetectorScreen> {
   bool _isBackendHealthy = false;
   bool _isSessionActive = false;
   bool _stoveWasDetected = false; // Track first detection
-  bool _handsFreeMode = true; // NEW: Continuous listening mode
+  final bool _handsFreeMode = true; // NEW: Continuous listening mode
   String _backendUrl = 'http://172.20.10.7:8000';
   String _apiKey = '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'; // Groq API key
   
@@ -188,7 +188,7 @@ class _StoveDetectorScreenState extends State<StoveDetectorScreen> {
     _voiceAssistant?.reset();
     
     // Start continuous detection
-    _detectionTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    _detectionTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       if (_isSessionActive && !_isDetecting) {
         _captureAndDetect();
       }
@@ -380,7 +380,7 @@ class _StoveDetectorScreenState extends State<StoveDetectorScreen> {
           ),
           // Voice assistant indicator
           if (_voiceAssistant != null && _voiceAssistant!.isInitialized)
-            Icon(
+            const Icon(
               Icons.mic,
               color: Colors.blue,
               size: 20,
